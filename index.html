@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LPG Fire Code Fee Calculator</title>
+
+  <style>
+    body{
+      font-family: Arial, sans-serif;
+      background:#f4f4f4;
+      padding:20px;
+    }
+
+    .container{
+      max-width:700px;
+      margin:auto;
+      background:white;
+      padding:25px;
+      border-radius:10px;
+      box-shadow:0 0 10px rgba(0,0,0,0.2);
+    }
+
+    h1{
+      text-align:center;
+      color:#c62828;
+    }
+
+    label{
+      font-weight:bold;
+      display:block;
+      margin-top:15px;
+    }
+
+    input{
+      width:100%;
+      padding:10px;
+      margin-top:5px;
+      border:1px solid #ccc;
+      border-radius:5px;
+    }
+
+    button{
+      margin-top:20px;
+      width:100%;
+      padding:12px;
+      background:#c62828;
+      color:white;
+      border:none;
+      border-radius:5px;
+      font-size:16px;
+      cursor:pointer;
+    }
+
+    button:hover{
+      background:#b71c1c;
+    }
+
+    .result{
+      margin-top:25px;
+      background:#fafafa;
+      padding:20px;
+      border-radius:10px;
+      border:1px solid #ddd;
+    }
+
+    .result h2{
+      color:#c62828;
+    }
+
+    .total{
+      font-size:20px;
+      font-weight:bold;
+      color:green;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <h1>LPG Fire Code Fee Calculator</h1>
+
+  <label>Number of 50 KG LPG Cylinders</label>
+  <input type="number" id="tank50" value="0">
+
+  <label>Number of 11 KG LPG Cylinders</label>
+  <input type="number" id="tank11" value="0">
+
+  <label>Fire Code Fee Rate per Liter (PHP)</label>
+  <input type="number" id="rate" value="0.50" step="0.01">
+
+  <button onclick="compute()">Compute</button>
+
+  <div class="result" id="output">
+
+    <h2>Results</h2>
+
+    <p>Total KG: <span id="totalKg">0</span> kg</p>
+
+    <p>Total Liters: <span id="totalLiters">0</span> L</p>
+
+    <p>Equivalent 50 KG Tanks: <span id="eq50">0</span></p>
+
+    <p>Equivalent 11 KG Tanks: <span id="eq11">0</span></p>
+
+    <p class="total">
+      Estimated Fire Code Fee:
+      ₱<span id="fee">0.00</span>
+    </p>
+
+  </div>
+
+</div>
+
+<script>
+
+function compute(){
+
+    const tank50 = parseFloat(document.getElementById("tank50").value) || 0;
+    const tank11 = parseFloat(document.getElementById("tank11").value) || 0;
+    const rate = parseFloat(document.getElementById("rate").value) || 0;
+
+    // TOTAL KG
+    const totalKg =
+        (tank50 * 50) +
+        (tank11 * 11);
+
+    // LPG Conversion
+    // 1 KG = 1.96 Liters
+    const totalLiters = totalKg * 1.96;
+
+    // Estimated Fire Code Fee
+    const fireFee = totalLiters * rate;
+
+    // Equivalent Tanks
+    const eq50 = totalKg / 50;
+    const eq11 = totalKg / 11;
+
+    document.getElementById("totalKg").innerHTML =
+        totalKg.toFixed(2);
+
+    document.getElementById("totalLiters").innerHTML =
+        totalLiters.toFixed(2);
+
+    document.getElementById("eq50").innerHTML =
+        eq50.toFixed(2);
+
+    document.getElementById("eq11").innerHTML =
+        eq11.toFixed(2);
+
+    document.getElementById("fee").innerHTML =
+        fireFee.toFixed(2);
+}
+
+</script>
+
+</body>
+</html>
